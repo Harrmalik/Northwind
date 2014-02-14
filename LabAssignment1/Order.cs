@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Northwind
 {
-    public class Order
+    public class Order : IListable
     {
         private static int numOrders = 0;
 
@@ -190,7 +190,7 @@ namespace Northwind
 
         public static string totalCount()
         {
-            return " Orders: " + numOrders + "\n";
+            return "4. Orders: " + numOrders + "\n";
         }
 
         public override string ToString()

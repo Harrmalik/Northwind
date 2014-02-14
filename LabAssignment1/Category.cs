@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Northwind
 {
-    public class Category
+    public class Category : IListable
     {
         private static int numCategories = 0;
 
@@ -78,7 +78,7 @@ namespace Northwind
 
         public static string totalCount()
         {
-            return " Categories: " + numCategories + "\n";
+            return "1. Categories: " + numCategories + "\n";
         }
 
         public override string ToString() { 

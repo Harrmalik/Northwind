@@ -33,12 +33,12 @@ namespace Northwind
             }
         }
         
-        public List<Category> GetCategories() {
+        public List<IListable> GetCategories() {
 
             int anID;
             string aCategoryName;
             string aDescription;
-            List<Category> categoryList = new List<Category>();
+            List<IListable> categoryList = new List<IListable>();
 
             //Look for class name, treat each element as a new row.
             IEnumerable<XElement> rows = from row in aCategoryFile.Descendants("Category")
@@ -58,7 +58,7 @@ namespace Northwind
             return categoryList;
         }
 
-        public List<Customer> GetCustomers()
+        public List<IListable> GetCustomers()
         {
             string aCustomerID;
             string aCompanyName;
@@ -71,7 +71,7 @@ namespace Northwind
             string aCountry;
             string aPhone;
             string aFax;
-            List<Customer> customerList = new List<Customer>();
+            List<IListable> customerList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in aCustomerFile.Descendants("Customer")
                                          select row;
@@ -97,7 +97,7 @@ namespace Northwind
             return customerList;
         }
 
-        public List<Employee> GetEmployees()
+        public List<IListable> GetEmployees()
         {
             int anEmployeeID;
             string aLastName;
@@ -116,7 +116,7 @@ namespace Northwind
             string aNotes;
             int aReportsTo;
 
-            List<Employee> employeesList = new List<Employee>();
+            List<IListable> employeesList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in anEmployeeFile.Descendants("Employee")
                                          select row;
@@ -147,7 +147,7 @@ namespace Northwind
             return employeesList;
         }
 
-        public List<Order> GetOrders()
+        public List<IListable> GetOrders()
         {
             int anOrderID;
             string aCustomerID;
@@ -164,7 +164,7 @@ namespace Northwind
             string aShipPostalCode;
             string aShipCountry;
 
-            List<Order> ordersList = new List<Order>();
+            List<IListable> ordersList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in anOrderFile.Descendants("Order")
                                          select row;
@@ -193,7 +193,7 @@ namespace Northwind
             return ordersList;
         }
 
-        public List<OrderDetail> GetOrderDetails()
+        public List<IListable> GetOrderDetails()
         {
             int anOrderID;
             int aProductID;
@@ -201,7 +201,7 @@ namespace Northwind
             int aQuantity;
             double aDiscount;
 
-            List<OrderDetail> orderDetailsList = new List<OrderDetail>();
+            List<IListable> orderDetailsList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in anOrderDetailFile.Descendants("OrderDetail")
                                          select row;
@@ -221,7 +221,7 @@ namespace Northwind
             return orderDetailsList;
         }
 
-        public List<Product> GetProducts()
+        public List<IListable> GetProducts()
         {
             int aProductID;
             string aProductName;
@@ -234,7 +234,7 @@ namespace Northwind
             int aReorderLevel;
             bool aDiscontinued;
 
-            List<Product> productsList = new List<Product>();
+            List<IListable> productsList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in aProductsFile.Descendants("Product")
                                          select row;
@@ -259,13 +259,13 @@ namespace Northwind
             return productsList;
         }
 
-        public List<Shipper> GetShippers()
+        public List<IListable> GetShippers()
         {
             int aShipperID;
             string aCompanyName;
             string aPhone;
 
-            List<Shipper> shippersList = new List<Shipper>();
+            List<IListable> shippersList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in aShippersFile.Descendants("Shipper")
                                          select row;
@@ -283,7 +283,7 @@ namespace Northwind
             return shippersList;
         }
 
-        public List<Supplier> GetSuppliers()
+        public List<IListable> GetSuppliers()
         {
             int aSupplierID;
             string aCompanyName;
@@ -298,7 +298,7 @@ namespace Northwind
             string aFax;
             string aHomePage;
 
-            List<Supplier> suppliersList = new List<Supplier>();
+            List<IListable> suppliersList = new List<IListable>();
 
             IEnumerable<XElement> rows = from row in aSuppliersFile.Descendants("Supplier")
                                          select row;
