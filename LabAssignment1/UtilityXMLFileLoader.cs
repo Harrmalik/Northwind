@@ -324,5 +324,42 @@ namespace Northwind
 
             return suppliersList;
         }
+
+        public Product GetProduct(string anID) {
+            Product thatProduct = new Product();
+
+            int aProductID;
+            string aProductName;
+            int aSupplierID;
+            int aCategoryID;
+            string aQuantityPerUnit;
+            double aUnitPrice;
+            int aUnitsInStock;
+            int aUnitsOnOrder;
+            int aReorderLevel;
+            bool aDiscontinued;
+
+            IEnumerable<XElement> rows = from row in aProductsFile.Descendants("Product")
+                                            where row.Attribute("ProductID").Value == anID
+                                            select row;
+
+            foreach (var aRow in rows){
+                aProductID = (int?)aRow.Attribute("ProductID") ?? -1;
+                aProductName = (string)aRow.Attribute("ProductName") ?? "N/A";
+                aSupplierID = (int?)aRow.Attribute("SupplierID") ?? -1;
+                aCategoryID = (int?)aRow.Attribute("CategoryID") ?? -1;
+                aQuantityPerUnit = (string)aRow.Attribute("QuantityPerUnit") ?? "N/A";
+                aUnitPrice = (double?)aRow.Attribute("UnitPrice") ?? 999999.99;
+                aUnitsInStock = (int?)aRow.Attribute("UnitsInStock") ?? 0;
+                aUnitsOnOrder = (int?)aRow.Attribute("UnitsOnOrder") ?? 0;
+                aReorderLevel = (int?)aRow.Attribute("ReorderLevel") ?? 0;
+                aDiscontinued = (bool?)aRow.Attribute("Discontinued") ?? true;
+
+                Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, aDiscontinued);
+            
+            }
+
+            return thatProduct;
+        }
     }
 }

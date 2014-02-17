@@ -8,7 +8,7 @@ namespace Northwind
 {
     public interface IListable
     {
-        string ToString();
+        
     }
 
     public class Northwind
@@ -17,8 +17,6 @@ namespace Northwind
 
             LabController aController = new LabController();
             LabView aView = new LabView(aController);
-
-            aView.PrintTotals();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Northwind
 
         public LabView(LabController aController) {
             mainController = aController;
+            this.PrintTotals();
         }
 
         //Retrieves & prints total stored as static var for each table
@@ -29,11 +30,11 @@ namespace Northwind
             output += Product.totalCount();
             output += Shipper.totalCount();
             output += Supplier.totalCount();
-            output += "\n Which records would you like to see? \n";
+            output += "\nEnter the # of the records you'd like to see. \n";
 
             Console.Write(output);
 
-            this.Print(mainController.selectTable(Console.ReadLine()));
+            this.Print(this.selectTable(Console.ReadLine()));
         }
         
         public void Print(string aString) {
@@ -47,6 +48,41 @@ namespace Northwind
                 Console.WriteLine(aListable.ToString());
             }
             Console.ReadLine();
+        }
+
+        public List<IListable> selectTable(string input)
+        {
+            List<IListable> aList = new List<IListable>();
+            List<IListable> sucks = new List<IListable>();
+
+            switch (input)
+            {
+                case "1":
+                    aList = this.GetCategories();
+                    return aList;
+                case "2":
+                    aList = this.GetCustomers();
+                    return aList;
+                case "3":
+                    aList = this.GetEmployees();
+                    return aList;
+                case "4":
+                    aList = this.GetOrders();
+                    return aList;
+                case "5":
+                    aList = this.GetOrderDetails();
+                    return aList;
+                case "6":
+                    aList = this.GetProducts();
+                    return aList;
+                case "7":
+                    aList = this.GetShippers();
+                    return aList;
+                case "8":
+                    aList = this.GetSuppliers();
+                    return aList;
+                default: return sucks;
+            }
         }
         
         //public void Print(List<Category> aList)
