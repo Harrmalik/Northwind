@@ -46,32 +46,22 @@ namespace Northwind
             return ordersList;
         }
 
-        public List<IListable> GetOrderDetails()
+        public List<IListable> GetOrderDetails(string input)
         {
-            List<IListable> orderDetailList = new List<IListable>();
-            orderDetailList = aLoader.GetOrderDetails();
+            List<IListable> aList = new List<IListable>();
 
-            return orderDetailList;
-        }
-
-        public List<IListable> productOptions(string anID) {
-            switch (anID) {
-                case "1": 
-                    Console.WriteLine("Enter a Product ID");
-                    List<IListable> aList = new List<IListable>();
-                    aList = aLoader.GetProductByID(Console.ReadLine());
+            switch (input) { 
+                case "1":
+                    Console.WriteLine("Enter an OrderID");
+                    aList = aLoader.GetDetailsByOrder(Console.ReadLine());
                     return aList;
                 case "2":
-                    Console.WriteLine("Enter a Category ID");
-                    List<IListable> bList = new List<IListable>();
-                    bList = aLoader.GetProductsByCategory(Console.ReadLine());
-                    return bList;
-                case "3":
-                    List<IListable> cList = new List<IListable>();
-                    cList = aLoader.GetProducts();
-                    return cList;
+                    aList = aLoader.GetOrderDetails();
+                    return aList;
                 default:
                     List<IListable> errorList = new List<IListable>();
+                    Error anError = new Error();
+                    errorList.Add(anError);
                     return errorList;
             }
         }
@@ -95,12 +85,28 @@ namespace Northwind
             return aLoader.GetProductsByCategory(aCategoryID);
         }
 
-        public List<IListable> GetProducts()
+        public List<IListable> GetProducts(string anID)
         {
-            List<IListable> productsList = new List<IListable>();
-            productsList = aLoader.GetProducts();
-
-            return productsList;
+            switch (anID)
+            {
+                case "1":
+                    Console.WriteLine("Enter a Product ID");
+                    List<IListable> aList = new List<IListable>();
+                    aList = aLoader.GetProductByID(Console.ReadLine());
+                    return aList;
+                case "2":
+                    Console.WriteLine("Enter a Category ID");
+                    List<IListable> bList = new List<IListable>();
+                    bList = aLoader.GetProductsByCategory(Console.ReadLine());
+                    return bList;
+                case "3":
+                    List<IListable> cList = new List<IListable>();
+                    cList = aLoader.GetProducts();
+                    return cList;
+                default:
+                    List<IListable> errorList = new List<IListable>();
+                    return errorList;
+            }
         }
 
         public List<IListable> GetShippers()

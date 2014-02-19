@@ -406,5 +406,36 @@ namespace Northwind
 
             return aList;
         }
+
+        public List<IListable> GetDetailsByOrder(string inputID)
+        {
+            int anOrderID;
+            int aProductID;
+            double aUnitPrice;
+            int aQuantity;
+            double aDiscount;
+
+            List<IListable> orderDetailsList = new List<IListable>();
+
+            IEnumerable<XElement> rows = from row in anOrderDetailFile.Descendants("OrderDetail")
+                                         where row.Attribute("OrderID").Value.Equals(inputID)
+                                         select row;
+
+            foreach (var aRow in rows)
+            {
+                anOrderID = (int?)aRow.Attribute("OrderID") ?? -1;
+                aProductID = (int?)aRow.Attribute("ProductID") ?? -1;
+                aUnitPrice = (double?)aRow.Attribute("UnitPrice") ?? 999999.99;
+                aQuantity = (int?)aRow.Attribute("Quantity") ?? 0;
+                aDiscount = (double?)aRow.Attribute("Discount") ?? 0.00;
+
+                OrderDetail anOrderDetail = new OrderDetail(anOrderID, aProductID, aUnitPrice, aQuantity, aDiscount);
+                orderDetailsList.Add(anOrderDetail);
+            }
+
+            return orderDetailsList;
+        }
+
+
     }
 }

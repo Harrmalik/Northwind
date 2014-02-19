@@ -21,8 +21,8 @@ namespace Northwind
             mainController.GetCustomers();
             mainController.GetEmployees();
             mainController.GetOrders();
-            mainController.GetOrderDetails();
-            mainController.GetProducts();
+            mainController.GetOrderDetails("2");
+            mainController.GetProducts("3");
             mainController.GetShippers();
             mainController.GetSuppliers();
 
@@ -70,45 +70,36 @@ namespace Northwind
             {
                 case "1":
                     this.Print(mainController.GetCategories());
-                    this.PrintTotals();
                     break;
                 case "2":
                     this.Print(mainController.GetCustomers());
-                    this.PrintTotals();
                     break;
                 case "3":
                     this.Print(mainController.GetEmployees());
-                    this.PrintTotals();
                     break;
                 case "4":
                     this.Print(mainController.GetOrders());
-                    this.PrintTotals();
                     break;
                 case "5":
-                    this.Print(mainController.GetOrderDetails());
-                    this.PrintTotals();
+                    Console.WriteLine("Enter 1 to search by Order, enter 2 to print all.");
+                    this.Print(mainController.GetOrderDetails(Console.ReadLine()));
                     break;
                 case "6":
-                    //Console.WriteLine("Enter a Product ID");
-                    //string theID = Console.ReadLine();
-                    //this.Print(mainController.GetProductByID(theID));
                     Console.WriteLine("Enter 1 to search by ID, 2 to search by CategoryID, or 3 to print all.");
-                    this.Print(mainController.productOptions(Console.ReadLine()));
-                    this.PrintTotals();
+                    this.Print(mainController.GetProducts(Console.ReadLine()));
                     break;
                 case "7":
                     this.Print(mainController.GetShippers());
-                    this.PrintTotals();
                     break;
                 case "8":
                     this.Print(mainController.GetSuppliers());
-                    this.PrintTotals();
                     break;
                 default: 
                     Console.WriteLine("Please enter a # 1-8");
                     this.selectTable(Console.ReadLine());
                     break;
             }
+            this.PrintTotals();
         }
         
         //public void Print(List<Category> aList)
