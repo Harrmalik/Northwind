@@ -54,6 +54,21 @@ namespace Northwind
             return orderDetailList;
         }
 
+        public List<IListable> GetProductByID(string anID) {
+            aLoader.GetProducts();
+            if (Int32.Parse(anID) < Product.numProducts && Int32.Parse(anID) > 0)
+            {
+                return aLoader.GetProductByID(anID);
+            }
+            else
+            {
+                List<IListable> errorList = new List<IListable>();
+                Error anError = new Error();
+                errorList.Add(anError);
+                return errorList;
+            }
+        }
+
         public List<IListable> GetProducts()
         {
             List<IListable> productsList = new List<IListable>();

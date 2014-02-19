@@ -20,6 +20,10 @@ namespace Northwind
 
         private static UtilityXMLFileLoader anInstance = null;
 
+        private UtilityXMLFileLoader() { 
+            //initialization goes here
+        }
+
         public static UtilityXMLFileLoader AnInstance
         {
             get
@@ -32,6 +36,8 @@ namespace Northwind
                 return anInstance;
             }
         }
+
+        
         
         public List<IListable> GetCategories() {
 
@@ -325,8 +331,8 @@ namespace Northwind
             return suppliersList;
         }
 
-        public Product GetProduct(string anID) {
-            Product thatProduct = new Product();
+        public List<IListable> GetProductByID(string anID) {
+            List<IListable> aList = new List<IListable>();
 
             int aProductID;
             string aProductName;
@@ -340,7 +346,7 @@ namespace Northwind
             bool aDiscontinued;
 
             IEnumerable<XElement> rows = from row in aProductsFile.Descendants("Product")
-                                            where row.Attribute("ProductID").Value == anID
+                                            where row.Attribute("ProductID").Value.Equals(anID)
                                             select row;
 
             foreach (var aRow in rows){
@@ -356,10 +362,10 @@ namespace Northwind
                 aDiscontinued = (bool?)aRow.Attribute("Discontinued") ?? true;
 
                 Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, aDiscontinued);
-            
+                aList.Add(aProduct);
             }
 
-            return thatProduct;
+            return aList;
         }
     }
 }

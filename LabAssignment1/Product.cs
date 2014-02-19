@@ -12,7 +12,7 @@ namespace Northwind
 {
     public class Product : IListable
     {
-        private static int numProducts = 0;
+        public static int numProducts = 0;
 
         private int productID = -1;
         private string productName = "N/A";

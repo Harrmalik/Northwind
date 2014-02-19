@@ -16,6 +16,19 @@ namespace Northwind
 
         public LabView(LabController aController) {
             mainController = aController;
+            
+            mainController.GetCategories();
+            mainController.GetCustomers();
+            mainController.GetEmployees();
+            mainController.GetOrders();
+            mainController.GetOrderDetails();
+            mainController.GetProducts();
+            mainController.GetShippers();
+            mainController.GetSuppliers();
+
+            //Console.WriteLine("Enter the Product ID to view");
+            //string anID = Console.ReadLine();
+            //this.Print(mainController.GetProductByID(anID));
             this.PrintTotals();
         }
 
@@ -34,7 +47,8 @@ namespace Northwind
 
             Console.Write(output);
 
-            this.Print(this.selectTable(Console.ReadLine()));
+            this.selectTable(Console.ReadLine());
+
         }
         
         public void Print(string aString) {
@@ -50,7 +64,7 @@ namespace Northwind
             Console.ReadLine();
         }
 
-        public List<IListable> selectTable(string input)
+        public void selectTable(string input)
         {
             List<IListable> aList = new List<IListable>();
             List<IListable> sucks = new List<IListable>();
@@ -58,30 +72,36 @@ namespace Northwind
             switch (input)
             {
                 case "1":
-                    aList = this.GetCategories();
-                    return aList;
+                    this.Print(mainController.GetCategories());
+                    break;
                 case "2":
-                    aList = this.GetCustomers();
-                    return aList;
+                    this.Print(mainController.GetCustomers());
+                    break;
                 case "3":
-                    aList = this.GetEmployees();
-                    return aList;
+                    this.Print(mainController.GetEmployees());
+                    break;
                 case "4":
-                    aList = this.GetOrders();
-                    return aList;
+                    this.Print(mainController.GetOrders());
+                    break;
                 case "5":
-                    aList = this.GetOrderDetails();
-                    return aList;
+                    this.Print(mainController.GetOrderDetails());
+                    break;
                 case "6":
-                    aList = this.GetProducts();
-                    return aList;
+                    //aList = mainController.GetProducts();
+                    //return aList;
+                    Console.WriteLine("Enter a Product ID");
+                    string theID = Console.ReadLine();
+                    this.Print(mainController.GetProductByID(theID));
+                    break;
                 case "7":
-                    aList = this.GetShippers();
-                    return aList;
+                    this.Print(mainController.GetShippers());
+                    break;
                 case "8":
-                    aList = this.GetSuppliers();
-                    return aList;
-                default: return sucks;
+                    this.Print(mainController.GetSuppliers());
+                    break;
+                default: Console.WriteLine("Please enter a # 1-8");
+                    this.Print("Nah");
+                    break;
             }
         }
         
