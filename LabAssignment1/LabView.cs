@@ -66,41 +66,47 @@ namespace Northwind
 
         public void selectTable(string input)
         {
-            List<IListable> aList = new List<IListable>();
-            List<IListable> sucks = new List<IListable>();
-
             switch (input)
             {
                 case "1":
                     this.Print(mainController.GetCategories());
+                    this.PrintTotals();
                     break;
                 case "2":
                     this.Print(mainController.GetCustomers());
+                    this.PrintTotals();
                     break;
                 case "3":
                     this.Print(mainController.GetEmployees());
+                    this.PrintTotals();
                     break;
                 case "4":
                     this.Print(mainController.GetOrders());
+                    this.PrintTotals();
                     break;
                 case "5":
                     this.Print(mainController.GetOrderDetails());
+                    this.PrintTotals();
                     break;
                 case "6":
-                    //aList = mainController.GetProducts();
-                    //return aList;
-                    Console.WriteLine("Enter a Product ID");
-                    string theID = Console.ReadLine();
-                    this.Print(mainController.GetProductByID(theID));
+                    //Console.WriteLine("Enter a Product ID");
+                    //string theID = Console.ReadLine();
+                    //this.Print(mainController.GetProductByID(theID));
+                    Console.WriteLine("Enter 1 to search by ID, 2 to search by CategoryID, or 3 to print all.");
+                    this.Print(mainController.productOptions(Console.ReadLine()));
+                    this.PrintTotals();
                     break;
                 case "7":
                     this.Print(mainController.GetShippers());
+                    this.PrintTotals();
                     break;
                 case "8":
                     this.Print(mainController.GetSuppliers());
+                    this.PrintTotals();
                     break;
-                default: Console.WriteLine("Please enter a # 1-8");
-                    this.Print("Nah");
+                default: 
+                    Console.WriteLine("Please enter a # 1-8");
+                    this.selectTable(Console.ReadLine());
                     break;
             }
         }

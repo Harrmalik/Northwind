@@ -54,8 +54,29 @@ namespace Northwind
             return orderDetailList;
         }
 
+        public List<IListable> productOptions(string anID) {
+            switch (anID) {
+                case "1": 
+                    Console.WriteLine("Enter a Product ID");
+                    List<IListable> aList = new List<IListable>();
+                    aList = aLoader.GetProductByID(Console.ReadLine());
+                    return aList;
+                case "2":
+                    Console.WriteLine("Enter a Category ID");
+                    List<IListable> bList = new List<IListable>();
+                    bList = aLoader.GetProductsByCategory(Console.ReadLine());
+                    return bList;
+                case "3":
+                    List<IListable> cList = new List<IListable>();
+                    cList = aLoader.GetProducts();
+                    return cList;
+                default:
+                    List<IListable> errorList = new List<IListable>();
+                    return errorList;
+            }
+        }
+
         public List<IListable> GetProductByID(string anID) {
-            aLoader.GetProducts();
             if (Int32.Parse(anID) < Product.numProducts && Int32.Parse(anID) > 0)
             {
                 return aLoader.GetProductByID(anID);
@@ -67,6 +88,11 @@ namespace Northwind
                 errorList.Add(anError);
                 return errorList;
             }
+        }
+
+        public List<IListable> GetProductsByCategory(string aCategoryID)
+        {
+            return aLoader.GetProductsByCategory(aCategoryID);
         }
 
         public List<IListable> GetProducts()
