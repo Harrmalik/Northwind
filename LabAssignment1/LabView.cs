@@ -22,19 +22,16 @@ namespace Northwind
             mainController.GetEmployees();
             mainController.GetOrders();
             mainController.GetOrderDetails("2");
-            mainController.GetProducts("3");
+            mainController.GetProducts("4");
             mainController.GetShippers();
             mainController.GetSuppliers();
 
-            //Console.WriteLine("Enter the Product ID to view");
-            //string anID = Console.ReadLine();
-            //this.Print(mainController.GetProductByID(anID));
             this.PrintTotals();
         }
 
         //Retrieves & prints total stored as static var for each table
         public void PrintTotals(){
-            string output = "|___ENTRY TOTALS___| \n\n";
+            string output = "";
             output += Category.totalCount();
             output += Customer.totalCount();
             output += Employee.totalCount(); 
@@ -43,7 +40,7 @@ namespace Northwind
             output += Product.totalCount();
             output += Shipper.totalCount();
             output += Supplier.totalCount();
-            output += "\nEnter the # of the records you'd like to see. \n";
+            output += "\nEnter the # to the left of the records you'd like to see. \n";
 
             Console.Write(output);
 
@@ -82,11 +79,22 @@ namespace Northwind
                     break;
                 case "5":
                     Console.WriteLine("Enter 1 to search by Order, enter 2 to print all.");
-                    this.Print(mainController.GetOrderDetails(Console.ReadLine()));
+                    List<IListable> detailsList = mainController.GetOrderDetails(Console.ReadLine());
+                    if (detailsList.Count == 0)
+                    {
+                        this.Print("There are no orders with that ID.");
+                        this.Print("Enter 1 to search by Order, enter 2 to print all.");
+                        mainController.GetOrderDetails(Console.ReadLine());
+                    }
+                    else
+                    {
+                        this.Print(detailsList);
+                    }
                     break;
                 case "6":
-                    Console.WriteLine("Enter 1 to search by ID, 2 to search by CategoryID, or 3 to print all.");
-                    this.Print(mainController.GetProducts(Console.ReadLine()));
+                    Console.WriteLine("Enter 1 to search by ID, 2 to search by CategoryID, 3 to select by price range, or 4 to print all.");
+                    List<IListable> productsList = mainController.GetProducts(Console.ReadLine());
+                    this.Print(productsList);
                     break;
                 case "7":
                     this.Print(mainController.GetShippers());
@@ -101,14 +109,5 @@ namespace Northwind
             }
             this.PrintTotals();
         }
-        
-        //public void Print(List<Category> aList)
-        //{
-        //    foreach (Category aCategory in aList)
-        //    {
-        //        Console.WriteLine(aCategory.ToString());
-        //    }
-        //    Console.ReadLine();
-        //}
     }
 }

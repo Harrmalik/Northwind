@@ -16,73 +16,37 @@ namespace Northwind
 
         public List<IListable> GetCategories()
         {
-            List<IListable> categoryList = new List<IListable>();
-            categoryList = aLoader.GetCategories();
-
-            return categoryList;
+            return aLoader.GetCategories();
         }
 
         public List<IListable> GetCustomers()
         {
-            List<IListable> customerList = new List<IListable>();
-            customerList = aLoader.GetCustomers();
-
-            return customerList;
+            return aLoader.GetCustomers();
         }
 
         public List<IListable> GetEmployees()
         {
-            List<IListable> employeeList = new List<IListable>();
-            employeeList = aLoader.GetEmployees();
-
-            return employeeList;
+            return aLoader.GetEmployees();
         }
 
         public List<IListable> GetOrders()
         {
-            List<IListable> ordersList = new List<IListable>();
-            ordersList = aLoader.GetOrders();
-
-            return ordersList;
+            return aLoader.GetOrders();
         }
 
         public List<IListable> GetOrderDetails(string input)
         {
-            List<IListable> aList = new List<IListable>();
-
-            switch (input) { 
+            switch (input) 
+            { 
                 case "1":
                     Console.WriteLine("Enter an OrderID");
-                    aList = aLoader.GetDetailsByOrder(Console.ReadLine());
-                    return aList;
+                    return aLoader.GetDetailsByOrder(Console.ReadLine());
                 case "2":
-                    aList = aLoader.GetOrderDetails();
-                    return aList;
+                    return aLoader.GetOrderDetails();
                 default:
                     List<IListable> errorList = new List<IListable>();
-                    Error anError = new Error();
-                    errorList.Add(anError);
                     return errorList;
             }
-        }
-
-        public List<IListable> GetProductByID(string anID) {
-            if (Int32.Parse(anID) < Product.numProducts && Int32.Parse(anID) > 0)
-            {
-                return aLoader.GetProductByID(anID);
-            }
-            else
-            {
-                List<IListable> errorList = new List<IListable>();
-                Error anError = new Error();
-                errorList.Add(anError);
-                return errorList;
-            }
-        }
-
-        public List<IListable> GetProductsByCategory(string aCategoryID)
-        {
-            return aLoader.GetProductsByCategory(aCategoryID);
         }
 
         public List<IListable> GetProducts(string anID)
@@ -91,18 +55,18 @@ namespace Northwind
             {
                 case "1":
                     Console.WriteLine("Enter a Product ID");
-                    List<IListable> aList = new List<IListable>();
-                    aList = aLoader.GetProductByID(Console.ReadLine());
-                    return aList;
+                    return aLoader.GetProductByID(Console.ReadLine());
                 case "2":
                     Console.WriteLine("Enter a Category ID");
-                    List<IListable> bList = new List<IListable>();
-                    bList = aLoader.GetProductsByCategory(Console.ReadLine());
-                    return bList;
+                    return aLoader.GetProductsByCategory(Console.ReadLine());
                 case "3":
-                    List<IListable> cList = new List<IListable>();
-                    cList = aLoader.GetProducts();
-                    return cList;
+                    Console.WriteLine("Enter a minimum price.");
+                    double min = Double.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter a maximum price.");
+                    double max = Double.Parse(Console.ReadLine());
+                    return aLoader.GetProductsByPrice(min, max);
+                case "4":
+                    return aLoader.GetProducts();
                 default:
                     List<IListable> errorList = new List<IListable>();
                     return errorList;
@@ -111,20 +75,12 @@ namespace Northwind
 
         public List<IListable> GetShippers()
         {
-            List<IListable> shippersList = new List<IListable>();
-            shippersList = aLoader.GetShippers();
-
-            return shippersList;
+            return aLoader.GetShippers();
         }
 
         public List<IListable> GetSuppliers()
         {
-            List<IListable> suppliersList = new List<IListable>();
-            suppliersList = aLoader.GetSuppliers();
-
-            return suppliersList;
-        }
-
-        
+            return aLoader.GetSuppliers();
+        } 
     }
 }
