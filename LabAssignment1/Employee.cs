@@ -217,7 +217,7 @@ namespace Northwind
 
         public static string totalCount()
         {
-            return "3. Employees: " + numEmployees + "\n";
+            return "3. Employees: " + numEmployees + " records \n";
         }
 
         public override string ToString()

@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Written by Kyle Goetschius
+//Date: 1/29/2014
+//Loads data from XML file, returns List
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,8 +40,6 @@ namespace Northwind
                 return anInstance;
             }
         }
-
-        
         
         public List<IListable> GetCategories() {
 
@@ -227,6 +229,35 @@ namespace Northwind
             return orderDetailsList;
         }
 
+        public List<IListable> GetDetailsByOrder(string inputID)
+        {
+            int anOrderID;
+            int aProductID;
+            double aUnitPrice;
+            int aQuantity;
+            double aDiscount;
+
+            List<IListable> orderDetailsList = new List<IListable>();
+
+            IEnumerable<XElement> rows = from row in anOrderDetailFile.Descendants("OrderDetail")
+                                         where row.Attribute("OrderID").Value.Equals(inputID)
+                                         select row;
+
+            foreach (var aRow in rows)
+            {
+                anOrderID = (int?)aRow.Attribute("OrderID") ?? -1;
+                aProductID = (int?)aRow.Attribute("ProductID") ?? -1;
+                aUnitPrice = (double?)aRow.Attribute("UnitPrice") ?? 999999.99;
+                aQuantity = (int?)aRow.Attribute("Quantity") ?? 0;
+                aDiscount = (double?)aRow.Attribute("Discount") ?? 0.00;
+
+                OrderDetail anOrderDetail = new OrderDetail(anOrderID, aProductID, aUnitPrice, aQuantity, aDiscount);
+                orderDetailsList.Add(anOrderDetail);
+            }
+
+            return orderDetailsList;
+        }
+
         public List<IListable> GetProducts()
         {
             int aProductID;
@@ -265,73 +296,8 @@ namespace Northwind
             return productsList;
         }
 
-        public List<IListable> GetShippers()
+        public List<IListable> GetProductByID(string anID)
         {
-            int aShipperID;
-            string aCompanyName;
-            string aPhone;
-
-            List<IListable> shippersList = new List<IListable>();
-
-            IEnumerable<XElement> rows = from row in aShippersFile.Descendants("Shipper")
-                                         select row;
-
-            foreach (var aRow in rows)
-            {
-                aShipperID = (int?)aRow.Attribute("ShipperID") ?? -1;
-                aCompanyName = (string)aRow.Attribute("CompanyName") ?? "N/A";
-                aPhone = (string)aRow.Attribute("Phone") ?? "N/A";
-
-                Shipper aShipper = new Shipper(aShipperID, aCompanyName, aPhone);
-                shippersList.Add(aShipper);
-            }
-
-            return shippersList;
-        }
-
-        public List<IListable> GetSuppliers()
-        {
-            int aSupplierID;
-            string aCompanyName;
-            string aContactName;
-            string aContactTitle;
-            string anAddress;
-            string aCity;
-            string aRegion;
-            string aPostalCode;
-            string aCountry;
-            string aPhone;
-            string aFax;
-            string aHomePage;
-
-            List<IListable> suppliersList = new List<IListable>();
-
-            IEnumerable<XElement> rows = from row in aSuppliersFile.Descendants("Supplier")
-                                         select row;
-
-            foreach (var aRow in rows)
-            {
-                aSupplierID = (int?)aRow.Attribute("SupplierID") ?? -1;
-                aCompanyName = (string)aRow.Attribute("CompanyName") ?? "N/A";
-                aContactName = (string)aRow.Attribute("ContactName") ?? "N/A";
-                aContactTitle = (string)aRow.Attribute("ContactTitle") ?? "N/A";
-                anAddress = (string)aRow.Attribute("Address") ?? "N/A";
-                aCity = (string)aRow.Attribute("City") ?? "N/A";
-                aRegion = (string)aRow.Attribute("Region") ?? "N/A";
-                aPostalCode = (string)aRow.Attribute("PostalCode") ?? "N/A";
-                aCountry = (string)aRow.Attribute("Country") ?? "N/A";
-                aPhone = (string)aRow.Attribute("Phone") ?? "N/A";
-                aFax = (string)aRow.Attribute("Fax") ?? "N/A";
-                aHomePage = (string)aRow.Attribute("HomePage") ?? "N/A";
-
-                Supplier aSupplier = new Supplier(aSupplierID, aCompanyName, aContactName, aContactTitle, anAddress, aCity, aRegion, aPostalCode, aCountry, aPhone, aFax, aHomePage);
-                suppliersList.Add(aSupplier);
-            }
-
-            return suppliersList;
-        }
-
-        public List<IListable> GetProductByID(string anID) {
             List<IListable> aList = new List<IListable>();
 
             int aProductID;
@@ -346,10 +312,11 @@ namespace Northwind
             bool aDiscontinued;
 
             IEnumerable<XElement> rows = from row in aProductsFile.Descendants("Product")
-                                            where row.Attribute("ProductID").Value.Equals(anID)
-                                            select row;
+                                         where row.Attribute("ProductID").Value.Equals(anID)
+                                         select row;
 
-            foreach (var aRow in rows){
+            foreach (var aRow in rows)
+            {
                 aProductID = (int?)aRow.Attribute("ProductID") ?? -1;
                 aProductName = (string)aRow.Attribute("ProductName") ?? "N/A";
                 aSupplierID = (int?)aRow.Attribute("SupplierID") ?? -1;
@@ -448,33 +415,70 @@ namespace Northwind
             return aList;
         }
 
-        public List<IListable> GetDetailsByOrder(string inputID)
+        public List<IListable> GetShippers()
         {
-            int anOrderID;
-            int aProductID;
-            double aUnitPrice;
-            int aQuantity;
-            double aDiscount;
+            int aShipperID;
+            string aCompanyName;
+            string aPhone;
 
-            List<IListable> orderDetailsList = new List<IListable>();
+            List<IListable> shippersList = new List<IListable>();
 
-            IEnumerable<XElement> rows = from row in anOrderDetailFile.Descendants("OrderDetail")
-                                         where row.Attribute("OrderID").Value.Equals(inputID)
+            IEnumerable<XElement> rows = from row in aShippersFile.Descendants("Shipper")
                                          select row;
 
             foreach (var aRow in rows)
             {
-                anOrderID = (int?)aRow.Attribute("OrderID") ?? -1;
-                aProductID = (int?)aRow.Attribute("ProductID") ?? -1;
-                aUnitPrice = (double?)aRow.Attribute("UnitPrice") ?? 999999.99;
-                aQuantity = (int?)aRow.Attribute("Quantity") ?? 0;
-                aDiscount = (double?)aRow.Attribute("Discount") ?? 0.00;
+                aShipperID = (int?)aRow.Attribute("ShipperID") ?? -1;
+                aCompanyName = (string)aRow.Attribute("CompanyName") ?? "N/A";
+                aPhone = (string)aRow.Attribute("Phone") ?? "N/A";
 
-                OrderDetail anOrderDetail = new OrderDetail(anOrderID, aProductID, aUnitPrice, aQuantity, aDiscount);
-                orderDetailsList.Add(anOrderDetail);
+                Shipper aShipper = new Shipper(aShipperID, aCompanyName, aPhone);
+                shippersList.Add(aShipper);
             }
 
-            return orderDetailsList;
+            return shippersList;
+        }
+
+        public List<IListable> GetSuppliers()
+        {
+            int aSupplierID;
+            string aCompanyName;
+            string aContactName;
+            string aContactTitle;
+            string anAddress;
+            string aCity;
+            string aRegion;
+            string aPostalCode;
+            string aCountry;
+            string aPhone;
+            string aFax;
+            string aHomePage;
+
+            List<IListable> suppliersList = new List<IListable>();
+
+            IEnumerable<XElement> rows = from row in aSuppliersFile.Descendants("Supplier")
+                                         select row;
+
+            foreach (var aRow in rows)
+            {
+                aSupplierID = (int?)aRow.Attribute("SupplierID") ?? -1;
+                aCompanyName = (string)aRow.Attribute("CompanyName") ?? "N/A";
+                aContactName = (string)aRow.Attribute("ContactName") ?? "N/A";
+                aContactTitle = (string)aRow.Attribute("ContactTitle") ?? "N/A";
+                anAddress = (string)aRow.Attribute("Address") ?? "N/A";
+                aCity = (string)aRow.Attribute("City") ?? "N/A";
+                aRegion = (string)aRow.Attribute("Region") ?? "N/A";
+                aPostalCode = (string)aRow.Attribute("PostalCode") ?? "N/A";
+                aCountry = (string)aRow.Attribute("Country") ?? "N/A";
+                aPhone = (string)aRow.Attribute("Phone") ?? "N/A";
+                aFax = (string)aRow.Attribute("Fax") ?? "N/A";
+                aHomePage = (string)aRow.Attribute("HomePage") ?? "N/A";
+
+                Supplier aSupplier = new Supplier(aSupplierID, aCompanyName, aContactName, aContactTitle, anAddress, aCity, aRegion, aPostalCode, aCountry, aPhone, aFax, aHomePage);
+                suppliersList.Add(aSupplier);
+            }
+
+            return suppliersList;
         }
     }
 }

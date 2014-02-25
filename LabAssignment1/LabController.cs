@@ -34,43 +34,33 @@ namespace Northwind
             return aLoader.GetOrders();
         }
 
-        public List<IListable> GetOrderDetails(string input)
+        public List<IListable> GetOrderDetails()
         {
-            switch (input) 
-            { 
-                case "1":
-                    Console.WriteLine("Enter an OrderID");
-                    return aLoader.GetDetailsByOrder(Console.ReadLine());
-                case "2":
-                    return aLoader.GetOrderDetails();
-                default:
-                    List<IListable> errorList = new List<IListable>();
-                    return errorList;
-            }
+            return aLoader.GetOrderDetails();
         }
 
-        public List<IListable> GetProducts(string anID)
+        public List<IListable> GetDetailsByOrder(string inputID) {
+            return aLoader.GetDetailsByOrder(inputID);
+        }
+
+        public List<IListable> GetProducts()
         {
-            switch (anID)
-            {
-                case "1":
-                    Console.WriteLine("Enter a Product ID");
-                    return aLoader.GetProductByID(Console.ReadLine());
-                case "2":
-                    Console.WriteLine("Enter a Category ID");
-                    return aLoader.GetProductsByCategory(Console.ReadLine());
-                case "3":
-                    Console.WriteLine("Enter a minimum price.");
-                    double min = Double.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter a maximum price.");
-                    double max = Double.Parse(Console.ReadLine());
-                    return aLoader.GetProductsByPrice(min, max);
-                case "4":
-                    return aLoader.GetProducts();
-                default:
-                    List<IListable> errorList = new List<IListable>();
-                    return errorList;
-            }
+            return aLoader.GetProducts();
+        }
+
+        public List<IListable> GetProductsByID(string anID) 
+        {
+            return aLoader.GetProductByID(anID);
+        }
+
+        public List<IListable> GetProductsByCategory(string anID)
+        {
+            return aLoader.GetProductsByCategory(anID);
+        }
+
+        public List<IListable> GetProductsByPrice(double min, double max)
+        {
+            return aLoader.GetProductsByPrice(min, max);
         }
 
         public List<IListable> GetShippers()

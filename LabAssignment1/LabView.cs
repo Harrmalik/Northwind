@@ -16,13 +16,13 @@ namespace Northwind
 
         public LabView(LabController aController) {
             mainController = aController;
-            
+
             mainController.GetCategories();
             mainController.GetCustomers();
             mainController.GetEmployees();
             mainController.GetOrders();
-            mainController.GetOrderDetails("2");
-            mainController.GetProducts("4");
+            mainController.GetOrderDetails();
+            mainController.GetProducts();
             mainController.GetShippers();
             mainController.GetSuppliers();
 
@@ -45,7 +45,6 @@ namespace Northwind
             Console.Write(output);
 
             this.selectTable(Console.ReadLine());
-
         }
         
         public void Print(string aString) {
@@ -79,22 +78,49 @@ namespace Northwind
                     break;
                 case "5":
                     Console.WriteLine("Enter 1 to search by Order, enter 2 to print all.");
-                    List<IListable> detailsList = mainController.GetOrderDetails(Console.ReadLine());
-                    if (detailsList.Count == 0)
+                    string detailKey = Console.ReadLine();
+                    if (detailKey == "1")
                     {
-                        this.Print("There are no orders with that ID.");
-                        this.Print("Enter 1 to search by Order, enter 2 to print all.");
-                        mainController.GetOrderDetails(Console.ReadLine());
+                        Console.WriteLine("Enter an Order ID: ");
+                        List<IListable> checkList = mainController.GetDetailsByOrder(Console.ReadLine());
+                        if (checkList.Count() == 0)
+                        {
+                            Console.WriteLine("No details were found for that ID.");
+                            this.selectTable("5");
+                        }
+                        else
+                        {
+                            this.Print(checkList);
+                        }
                     }
-                    else
-                    {
-                        this.Print(detailsList);
+                    else {
+                        this.Print(mainController.GetOrderDetails());
                     }
                     break;
                 case "6":
                     Console.WriteLine("Enter 1 to search by ID, 2 to search by CategoryID, 3 to select by price range, or 4 to print all.");
-                    List<IListable> productsList = mainController.GetProducts(Console.ReadLine());
-                    this.Print(productsList);
+                    string aKey = Console.ReadLine();
+
+                    switch (aKey) {
+                        case "1":
+                            Console.WriteLine("Enter a Product ID: ");
+                            this.Print(mainController.GetProductsByID(Console.ReadLine()));
+                            break;
+                        case "2":
+                            Console.WriteLine("Enter a Category ID: ");
+                            this.Print(mainController.GetProductsByCategory(Console.ReadLine()));
+                            break;
+                        case "3":
+                            Console.WriteLine("Enter a minimum price.");
+                            double min = Double.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter a maximum price.");
+                            double max = Double.Parse(Console.ReadLine());
+                            this.Print(mainController.GetProductsByPrice(min, max));
+                            break;
+                        default:
+                            this.Print(mainController.GetProducts());
+                            break;
+                    }
                     break;
                 case "7":
                     this.Print(mainController.GetShippers());

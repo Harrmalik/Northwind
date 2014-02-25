@@ -82,7 +82,7 @@ namespace Northwind
 
         public static string totalCount()
         {
-            return "5. Order Details: " + numOrderDetails + "\n";
+            return "5. Order Details: " + numOrderDetails + " records \n";
         }
 
         public override string ToString(){
