@@ -60,6 +60,7 @@ namespace Northwind
             Console.ReadLine();
         }
 
+        //Select records to putput based on input from Console
         public void selectTable(string input)
         {
             switch (input)

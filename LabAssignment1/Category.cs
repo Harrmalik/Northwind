@@ -34,14 +34,7 @@ namespace Northwind
             }
             set
             {
-                if (value == "")
-                {
-                    //throw NullReferenceException;
-                }
-                else
-                {
-                    this.categoryName = value;
-                }
+                this.categoryName = value;
             }
         }
 
@@ -76,6 +69,10 @@ namespace Northwind
         public Category(int anID)
             : this(anID, "N/A", "N/A") { }
 
+        public int NumCategories() {
+            return numCategories;
+        }
+        
         public static string totalCount()
         {
             return "1. Categories: " + numCategories + " records \n";
