@@ -13,64 +13,65 @@ namespace Northwind
     public class LabController
     {
         UtilityXMLFileLoader aLoader = UtilityXMLFileLoader.AnInstance;
+        UtilityDBLoader aDBLoader = UtilityDBLoader.AnInstance;
 
         public List<IListable> GetCategories()
         {
-            return aLoader.GetCategories();
+            return aDBLoader.GetCategories();
         }
 
         public List<IListable> GetCustomers()
         {
-            return aLoader.GetCustomers();
+            return aDBLoader.GetCustomers();
         }
 
         public List<IListable> GetEmployees()
         {
-            return aLoader.GetEmployees();
+            return aDBLoader.GetEmployees();
         }
 
         public List<IListable> GetOrders()
         {
-            return aLoader.GetOrders();
+            return aDBLoader.GetOrders();
         }
 
         public List<IListable> GetOrderDetails()
         {
-            return aLoader.GetOrderDetails();
+            return aDBLoader.GetOrderDetails();
         }
 
         public List<IListable> GetDetailsByOrder(string inputID) {
-            return aLoader.GetDetailsByOrder(inputID);
+            return aDBLoader.GetDetailsByOrder(inputID);
         }
 
         public List<IListable> GetProducts()
         {
-            return aLoader.GetProducts();
+            return aDBLoader.GetProducts();
         }
 
         public List<IListable> GetProductsByID(string anID) 
         {
-            return aLoader.GetProductByID(anID);
+            return aDBLoader.GetProductByID(anID);
         }
 
         public List<IListable> GetProductsByCategory(string anID)
         {
-            return aLoader.GetProductsByCategory(anID);
+            return aDBLoader.GetProductsByCategory(anID);
         }
 
         public List<IListable> GetProductsByPrice(double min, double max)
         {
-            return aLoader.GetProductsByPrice(min, max);
+            return aDBLoader.GetProductsByPrice(min, max);
         }
 
         public List<IListable> GetShippers()
         {
-            return aLoader.GetShippers();
+            return aDBLoader.GetShippers();
         }
 
         public List<IListable> GetSuppliers()
         {
-            return aLoader.GetSuppliers();
+            return aDBLoader.GetSuppliers();
         } 
     }
 }

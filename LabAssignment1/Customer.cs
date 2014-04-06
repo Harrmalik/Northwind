@@ -2,11 +2,11 @@
 //Date: 1/29/2014
 //Customer Model Class- Initializes default values for fields, creates accessor properties, constructors & ToString()
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
 namespace Northwind
 {
