@@ -5,22 +5,22 @@ A project that demonstrates loading data from Microsoft's Northwind database int
 
 The porject includes:
 
-Models
-1. Category.cs
-2. Customer.cs
-3. Employee.cs
-4. Order.cs
-5. OrderDetail.cs
-6. Product.cs
-7. Shipper.cs
-8. Supplier.cs
+## Models
+* Category.cs
+* Customer.cs
+* Employee.cs
+* Order.cs
+* OrderDetail.cs
+* Product.cs
+* Shipper.cs
+* Supplier.cs
 
-Views
-1. LabView.cs
+## Views
+* LabView.cs
 
-Controllers
-1. LabController
+## Controllers
+* LabController
 
-Utility Classes
-1. UtilityXMLFileLoader.cs
-2. UtilityDBLoader.cs
+## Utility Classes
+* UtilityXMLFileLoader.cs
+* UtilityDBLoader.cs
