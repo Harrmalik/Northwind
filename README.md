@@ -30,5 +30,6 @@ The project includes:
 `LabController` - Routes requests from the view to the appropriate Utility (XML or Database).
 
 ## Utility Classes
-`UtilityXMLFileLoader.cs`
-`UtilityDBLoader.cs`
+`UtilityXMLFileLoader.cs` - Contains methods to load information from XML files and return lists.
+
+`UtilityDBLoader.cs` - Contains methods to load information from database and return lists.
