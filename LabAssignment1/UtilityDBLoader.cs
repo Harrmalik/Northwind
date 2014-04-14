@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Written by Kyle Goetschius
+//Date: 3/07/2014
+//Class to establish connection to Northwind database, retrieve object lists
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +13,7 @@ namespace Northwind
 {
     class UtilityDBLoader
     {
+        //Singleton- ensures only one instance of the DB loader is created.
         private static UtilityDBLoader anInstance = null;
 
         private UtilityDBLoader() { 
@@ -27,20 +32,28 @@ namespace Northwind
             }
         }
 
+        //Connection string contains path to database
         private static string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\Kyle\Documents\Database\Northwind.mdb";
+        
+        //Connection object
         private static OleDbConnection aConnection = new OleDbConnection(connectionString);
+        
+        //Command object
         private OleDbCommand aCommand = aConnection.CreateCommand();
 
         public List<IListable> GetCategories()
         {
             List<IListable> categoryList = new List<IListable>();
 
+            //attempt to open database connection
             aConnection.Open();
 
+            //If connection is open- set query to be run, instatiate reader object
             if (aConnection.State == System.Data.ConnectionState.Open) {
                 aCommand.CommandText = "SELECT CategoryID, CategoryName, Description FROM Categories;";
                 OleDbDataReader aReader = aCommand.ExecuteReader();
 
+                //while reader is active, create object using data from DB and add object to list
                 while (aReader.Read())
                 {
                     int anID = aReader["CategoryID"] as int? ?? -1;
@@ -51,6 +64,7 @@ namespace Northwind
                     categoryList.Add(aCategory);
                 }
             }
+            //Close connection and return list
             aConnection.Close();
             return categoryList;
         }
@@ -75,7 +89,7 @@ namespace Northwind
                     string aCity = aReader["City"] as string ?? String.Empty;
                     string aRegion = aReader["Region"] as string ?? String.Empty;
                     string aPostalCode = aReader["PostalCode"] as string ?? String.Empty;
-                    string aCountry = aReader["Country"] as string ?? String.Empty as string ?? String.Empty;
+                    string aCountry = aReader["Country"] as string ?? String.Empty;
                     string aPhone = aReader["Phone"] as string ?? String.Empty;
                     string aFax = aReader["Fax"] as string ?? String.Empty;
 
@@ -104,10 +118,10 @@ namespace Northwind
                     string aFirstName = aReader["FirstName"] as string ?? String.Empty;
                     string aTitle = aReader["Title"] as string ?? String.Empty;
                     string aTitleOfCourtesy = aReader["TitleOfCourtesy"] as string ?? String.Empty;
-                    string aBirthDate = aReader["BirthDate"] as string ?? String.Empty;
-                    //FIX DATES
-                    string aHireDate = aReader["HireDate"].ToString() as string ?? String.Empty;
-                    string anAddress = aReader["Address"].ToString() as string ?? String.Empty;
+                    //CHECK DATES WITH NULLS
+                    string aBirthDate = Convert.ToString(aReader["BirthDate"] as DateTime?) ?? String.Empty;
+                    string aHireDate = Convert.ToString(aReader["HireDate"] as DateTime?) ?? String.Empty;
+                    string anAddress = aReader["Address"] as string ?? String.Empty;
                     string aCity = aReader["City"] as string ?? String.Empty;
                     string aRegion = aReader["Region"] as string ?? String.Empty;
                     string aPostalCode = aReader["PostalCode"] as string ?? String.Empty;
@@ -140,12 +154,11 @@ namespace Northwind
                     int anOrderID = aReader["OrderID"] as int? ?? -1;
                     string aCustomerID = aReader["CustomerID"] as string ?? String.Empty;
                     int anEmployeeID = aReader["EmployeeID"] as int? ?? -1;
-                    string anOrderDate = aReader["OrderDate"] as string ?? String.Empty;
-                    string aRequiredDate = aReader["RequiredDate"] as string ?? String.Empty;
-                    string aShippedDate = aReader["ShippedDate"] as string ?? String.Empty;
+                    string anOrderDate = aReader["OrderDate"].ToString();
+                    string aRequiredDate = aReader["RequiredDate"].ToString();
+                    string aShippedDate = aReader["ShippedDate"].ToString();
                     int aShipVia = aReader["ShipVia"] as int? ?? -1;
-                    //FIX DECIMAL HANDLING
-                    double aFreight = (double)(decimal)aReader["Freight"];
+                    double aFreight = Convert.ToDouble(aReader["Freight"] as decimal? ?? 0);
                     string aShipName = aReader["ShipName"] as string ?? String.Empty;
                     string aShipAddress = aReader["ShipAddress"] as string ?? String.Empty;
                     string aShipCity = aReader["ShipCity"] as string ?? String.Empty;
@@ -175,10 +188,9 @@ namespace Northwind
                 {
                     int anOrderID = aReader["OrderID"] as int? ?? -1;
                     int aProductID = aReader["ProductID"] as int? ?? -1;
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aQuantity = (int)((Nullable<Int16>)aReader["Quantity"] ?? 0);
-                    //FIX LOSS OF PRECISION 
-                    double aDiscount = (double)((Nullable<Single>) aReader["Discount"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aQuantity = aReader["Quantity"] as Int16? ?? 0;
+                    double aDiscount = Math.Round((double)((Nullable<Single>)aReader["Discount"] ?? 0), 2);
 
                     OrderDetail anOrderDetail = new OrderDetail(anOrderID, aProductID, aUnitPrice, aQuantity, aDiscount);
                     orderDetailsList.Add(anOrderDetail);
@@ -188,10 +200,11 @@ namespace Northwind
             return orderDetailsList;
         }
 
+
+
         public List<IListable> GetDetailsByOrder(string inputID)
         {
             List<IListable> orderDetailsList = new List<IListable>();
-
             aConnection.Open();
 
             if (aConnection.State == ConnectionState.Open) {
@@ -202,10 +215,9 @@ namespace Northwind
                 {
                     int anOrderID = aReader["OrderID"] as int? ?? -1;
                     int aProductID = aReader["ProductID"] as int? ?? -1;
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aQuantity = (int)((Nullable<Int16>)aReader["Quantity"] ?? 0);
-                    //FIX LOSS OF PRECISION 
-                    double aDiscount = (double)((Nullable<Single>)aReader["Discount"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aQuantity = aReader["Quantity"] as Int16? ?? 0;
+                    double aDiscount = Math.Round((double)((Nullable<Single>)aReader["Discount"] ?? 0), 2);
 
                     OrderDetail anOrderDetail = new OrderDetail(anOrderID, aProductID, aUnitPrice, aQuantity, aDiscount);
                     orderDetailsList.Add(anOrderDetail);
@@ -232,11 +244,10 @@ namespace Northwind
                     int aSupplierID = aReader["SupplierID"] as int? ?? -1;
                     int aCategoryID = aReader["CategoryID"] as int? ?? -1;
                     string aQuantityPerUnit = aReader["QuantityPerUnit"] as string ?? String.Empty;
-                    //CHECK ALL BELOW
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aUnitsInStock = (int)((Nullable<Int16>)aReader["UnitsInStock"] ?? 0);
-                    int aUnitsOnOrder = (int)((Nullable<Int16>)aReader["UnitsOnOrder"] ?? 0);
-                    int aReorderLevel = (int)((Nullable<Int16>)aReader["ReorderLevel"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aUnitsInStock = aReader["UnitsInStock"] as Int16? ?? 0;
+                    int aUnitsOnOrder = aReader["UnitsOnOrder"] as Int16? ?? 0;
+                    int aReorderLevel = aReader["ReorderLevel"] as Int16? ?? 0;
                     bool isDiscontinued = aReader["Discontinued"] as bool? ?? true;
 
                     Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, isDiscontinued);
@@ -265,11 +276,10 @@ namespace Northwind
                     int aSupplierID = aReader["SupplierID"] as int? ?? -1;
                     int aCategoryID = aReader["CategoryID"] as int? ?? -1;
                     string aQuantityPerUnit = aReader["QuantityPerUnit"] as string ?? String.Empty;
-                    //CHECK ALL BELOW
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aUnitsInStock = (int)((Nullable<Int16>)aReader["UnitsInStock"] ?? 0);
-                    int aUnitsOnOrder = (int)((Nullable<Int16>)aReader["UnitsOnOrder"] ?? 0);
-                    int aReorderLevel = (int)((Nullable<Int16>)aReader["ReorderLevel"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aUnitsInStock = aReader["UnitsInStock"] as Int16? ?? 0;
+                    int aUnitsOnOrder = aReader["UnitsOnOrder"] as Int16? ?? 0;
+                    int aReorderLevel = aReader["ReorderLevel"] as Int16? ?? 0;
                     bool isDiscontinued = aReader["Discontinued"] as bool? ?? true;
 
                     Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, isDiscontinued);
@@ -297,11 +307,10 @@ namespace Northwind
                     int aSupplierID = aReader["SupplierID"] as int? ?? -1;
                     int aCategoryID = aReader["CategoryID"] as int? ?? -1;
                     string aQuantityPerUnit = aReader["QuantityPerUnit"] as string ?? String.Empty;
-                    //CHECK ALL BELOW
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aUnitsInStock = (int)((Nullable<Int16>)aReader["UnitsInStock"] ?? 0);
-                    int aUnitsOnOrder = (int)((Nullable<Int16>)aReader["UnitsOnOrder"] ?? 0);
-                    int aReorderLevel = (int)((Nullable<Int16>)aReader["ReorderLevel"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aUnitsInStock = aReader["UnitsInStock"] as Int16? ?? 0;
+                    int aUnitsOnOrder = aReader["UnitsOnOrder"] as Int16? ?? 0;
+                    int aReorderLevel = aReader["ReorderLevel"] as Int16? ?? 0;
                     bool isDiscontinued = aReader["Discontinued"] as bool? ?? true;
 
                     Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, isDiscontinued);
@@ -330,11 +339,10 @@ namespace Northwind
                     int aSupplierID = aReader["SupplierID"] as int? ?? -1;
                     int aCategoryID = aReader["CategoryID"] as int? ?? -1;
                     string aQuantityPerUnit = aReader["QuantityPerUnit"] as string ?? String.Empty;
-                    //CHECK ALL BELOW
-                    double aUnitPrice = (double)(decimal)aReader["UnitPrice"];
-                    int aUnitsInStock = (int)((Nullable<Int16>)aReader["UnitsInStock"] ?? 0);
-                    int aUnitsOnOrder = (int)((Nullable<Int16>)aReader["UnitsOnOrder"] ?? 0);
-                    int aReorderLevel = (int)((Nullable<Int16>)aReader["ReorderLevel"] ?? 0);
+                    double aUnitPrice = Convert.ToDouble(aReader["UnitPrice"] as decimal? ?? 999999);
+                    int aUnitsInStock = aReader["UnitsInStock"] as Int16? ?? 0;
+                    int aUnitsOnOrder = aReader["UnitsOnOrder"] as Int16? ?? 0;
+                    int aReorderLevel = aReader["ReorderLevel"] as Int16? ?? 0;
                     bool isDiscontinued = aReader["Discontinued"] as bool? ?? true;
 
                     Product aProduct = new Product(aProductID, aProductName, aSupplierID, aCategoryID, aQuantityPerUnit, aUnitPrice, aUnitsInStock, aUnitsOnOrder, aReorderLevel, isDiscontinued);

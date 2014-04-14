@@ -19,21 +19,3 @@ namespace Northwind
         }
     }
 }
-
-//Essay myMidtermEsssay = new Essay(introParagraph, bodyParagraph, conclusion);
-
-
-//Essay{
-//    Paragraph anIntro = "THIS IS NOT A REAL ESSAY";
-//    Paragraph bodyParagraph = "STILL NOT REAL";
-
-//    public writeEssay(Paragraph theIntro, Paragraph theBody){
-//        string fulltext = "";
-//        fulltext += theIntro;
-//        fulltext += theBody;
-
-//        return fulltext;
-//    }
-//}
-//    }
-//}
