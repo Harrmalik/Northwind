@@ -14,10 +14,11 @@ namespace Northwind
     {
         UtilityXMLFileLoader aLoader = UtilityXMLFileLoader.AnInstance;
         UtilityDBLoader aDBLoader = UtilityDBLoader.AnInstance;
+        UtilityDBAdapter anAdapter = UtilityDBAdapter.AnInstance;
 
-        public List<IListable> GetCategories()
+        public string GetCategories()
         {
-            return aDBLoader.GetCategories();
+             return anAdapter.GetCategories();
         }
 
         public List<IListable> GetCustomers()
@@ -40,7 +41,8 @@ namespace Northwind
             return aDBLoader.GetOrderDetails();
         }
 
-        public List<IListable> GetDetailsByOrder(string inputID) {
+        public List<IListable> GetDetailsByOrder(string inputID)
+        {
             return aDBLoader.GetDetailsByOrder(inputID);
         }
 
@@ -49,7 +51,7 @@ namespace Northwind
             return aDBLoader.GetProducts();
         }
 
-        public List<IListable> GetProductsByID(string anID) 
+        public List<IListable> GetProductsByID(string anID)
         {
             return aDBLoader.GetProductByID(anID);
         }

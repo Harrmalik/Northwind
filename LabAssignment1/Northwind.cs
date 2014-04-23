@@ -13,7 +13,8 @@ namespace Northwind
 
     public class Northwind
     {
-        static void Main(string[] args) {
+        static void Main(string[] args)
+        {
             LabController aController = new LabController();
             LabView aView = new LabView(aController);
         }
