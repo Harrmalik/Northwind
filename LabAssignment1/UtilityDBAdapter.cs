@@ -37,47 +37,81 @@ namespace Northwind
 
         private UtilityDBAdapter()
         {
+            
+        }
+
+        public DataTable GetCategories()
+        {
             string categorySQL = "SELECT CategoryID, CategoryName, Description FROM Categories;";
-            string customerSQL = "SELECT CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax FROM Customers";
-            string employeeSQL = "SELECT EmployeeID, LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, Address, City, Region, PostalCode, Country, HomePhone, Extension, Notes, ReportsTo FROM Employees";
-            string orderSQL = "SELECT OrderID, CustomerID, EmployeeID, OrderDate, RequiredDate, ShippedDate, ShipVia, Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry FROM Orders";
-            string detailSQL = "SELECT OrderID, ProductID, UnitPrice, Quantity, Discount FROM [Order Details]";
-            string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
-            string shipperSQL = "SELECT ShipperID, CompanyName, Phone FROM Shippers";
-            string supplierSQL = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, City, Region, PostalCode, Country, Phone, Fax, HomePage FROM Suppliers";
 
             aCommand.CommandText = categorySQL;
             anAdapter.Fill(aDataSet, "MyCategories");
 
+            return aDataSet.Tables["MyCategories"];
+        }
+
+        public DataTable GetCustomers()
+        {
+            string customerSQL = "SELECT CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax FROM Customers";
+
             aCommand.CommandText = customerSQL;
             anAdapter.Fill(aDataSet, "MyCustomers");
 
+            return aDataSet.Tables["MyCustomers"];
+        }
+
+        public DataTable GetEmployees()
+        {
+            string employeeSQL = "SELECT EmployeeID, LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, Address, City, Region, PostalCode, Country, HomePhone, Extension, Notes, ReportsTo FROM Employees";
             aCommand.CommandText = employeeSQL;
             anAdapter.Fill(aDataSet, "MyEmployees");
 
+            return aDataSet.Tables["MyEmployees"];
+        }
+
+        public DataTable GetOrders()
+        {
+            string orderSQL = "SELECT OrderID, CustomerID, EmployeeID, OrderDate, RequiredDate, ShippedDate, ShipVia, Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry FROM Orders";
             aCommand.CommandText = orderSQL;
             anAdapter.Fill(aDataSet, "MyOrders");
 
+            return aDataSet.Tables["MyOrders"];
+        }
+
+        public DataTable GetOrderDetails()
+        {
+            string detailSQL = "SELECT OrderID, ProductID, UnitPrice, Quantity, Discount FROM [Order Details]";
             aCommand.CommandText = detailSQL;
             anAdapter.Fill(aDataSet, "MyOrderDetails");
 
+            return aDataSet.Tables["MyOrderDetails"];
+        }
+
+        public DataTable GetProducts()
+        {
+            string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
             aCommand.CommandText = productSQL;
             anAdapter.Fill(aDataSet, "MyProducts");
 
+            return aDataSet.Tables["MyProducts"];
+        }
+
+        public DataTable GetShippers()
+        {
+            string shipperSQL = "SELECT ShipperID, CompanyName, Phone FROM Shippers";
             aCommand.CommandText = shipperSQL;
             anAdapter.Fill(aDataSet, "MyShippers");
 
-            aCommand.CommandText = supplierSQL;
-            anAdapter.Fill(aDataSet, "MySuppliers");
+            return aDataSet.Tables["MyShippers"];
         }
 
-        public string GetCategories() {
-            string output = "-=CATEGORIES=-\n";
-            foreach (DataRow aRow in aDataSet.Tables["MyCategories"].Rows) {
-                output +="#" + aRow["CategoryID"] + ": " + aRow["CategoryName"] + "\n";
-                output += aRow["Description"] + "\n\n";
-            }
-            return output;
+        public DataTable GetSuppliers()
+        {
+            string supplierSQL = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, City, Region, PostalCode, Country, Phone, Fax, HomePage FROM Suppliers";
+            aCommand.CommandText = supplierSQL;
+            anAdapter.Fill(aDataSet, "MySuppliers");
+
+            return aDataSet.Tables["MySuppliers"];
         }
     }
 }

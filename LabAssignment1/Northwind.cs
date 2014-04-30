@@ -15,8 +15,8 @@ namespace Northwind
     {
         static void Main(string[] args)
         {
-            LabController aController = new LabController();
-            LabView aView = new LabView(aController);
+            Controller aController = new Controller();
+            ConsoleView aView = new ConsoleView(aController);
         }
     }
 }

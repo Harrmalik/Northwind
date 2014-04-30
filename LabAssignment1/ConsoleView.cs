@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace Northwind
 {
-    public class LabView
+    public class ConsoleView
     {
-        private LabController mainController;
+        private Controller mainController;
 
-        public LabView(LabController aController) {
+        public ConsoleView(Controller aController) {
             mainController = aController;
 
             mainController.GetCategories();
@@ -60,6 +61,16 @@ namespace Northwind
             Console.ReadLine();
         }
 
+        public void Print(DataTable aTable) {
+            foreach (DataRow aRow in aTable.Rows) {
+                foreach (DataColumn aCol in aTable.Columns) {
+                    Console.Write(aRow[aCol] + "\n");
+                }
+                Console.Write("\n");
+            }
+            Console.ReadLine();
+        }
+
         //Select records to putput based on input from Console
         public void selectTable(string input)
         {
@@ -83,8 +94,8 @@ namespace Northwind
                     if (detailKey == "1")
                     {
                         Console.WriteLine("Enter an Order ID: ");
-                        List<IListable> checkList = mainController.GetDetailsByOrder(Console.ReadLine());
-                        if (checkList.Count() == 0)
+                        DataTable checkList = mainController.GetDetailsByOrder(Console.ReadLine());
+                        if (checkList.Rows.Count == 0)
                         {
                             Console.WriteLine("No details were found for that ID.");
                             this.selectTable("5");

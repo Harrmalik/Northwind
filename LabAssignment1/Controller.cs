@@ -7,48 +7,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace Northwind
 {
-    public class LabController
+    public class Controller
     {
         UtilityXMLFileLoader aLoader = UtilityXMLFileLoader.AnInstance;
         UtilityDBLoader aDBLoader = UtilityDBLoader.AnInstance;
         UtilityDBAdapter anAdapter = UtilityDBAdapter.AnInstance;
 
-        public string GetCategories()
+        public DataTable GetCategories()
         {
              return anAdapter.GetCategories();
         }
 
-        public List<IListable> GetCustomers()
+        public DataTable GetCustomers()
         {
-            return aDBLoader.GetCustomers();
+            return anAdapter.GetCustomers();
         }
 
-        public List<IListable> GetEmployees()
+        public DataTable GetEmployees()
         {
-            return aDBLoader.GetEmployees();
+            return anAdapter.GetEmployees();
         }
 
-        public List<IListable> GetOrders()
+        public DataTable GetOrders()
         {
-            return aDBLoader.GetOrders();
+            return anAdapter.GetOrders();
         }
 
-        public List<IListable> GetOrderDetails()
+        public DataTable GetOrderDetails()
         {
-            return aDBLoader.GetOrderDetails();
+            return anAdapter.GetOrderDetails();
         }
 
-        public List<IListable> GetDetailsByOrder(string inputID)
+        public DataTable GetDetailsByOrder(string inputID)
         {
-            return aDBLoader.GetDetailsByOrder(inputID);
+            //return aDBLoader.GetDetailsByOrder(inputID);
+            var results = from aRow in anAdapter.GetOrderDetails().AsEnumerable()
+                          where aRow.Field<int>("OrderID") == Int32.Parse(inputID)
+                          select aRow;
+
+            return results.CopyToDataTable();
         }
 
-        public List<IListable> GetProducts()
+        public DataTable GetProducts()
         {
-            return aDBLoader.GetProducts();
+            return anAdapter.GetProducts();
         }
 
         public List<IListable> GetProductsByID(string anID)
@@ -66,14 +72,14 @@ namespace Northwind
             return aDBLoader.GetProductsByPrice(min, max);
         }
 
-        public List<IListable> GetShippers()
+        public DataTable GetShippers()
         {
-            return aDBLoader.GetShippers();
+            return anAdapter.GetShippers();
         }
 
-        public List<IListable> GetSuppliers()
+        public DataTable GetSuppliers()
         {
-            return aDBLoader.GetSuppliers();
+            return anAdapter.GetSuppliers();
         } 
     }
 }
