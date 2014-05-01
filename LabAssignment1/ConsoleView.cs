@@ -14,6 +14,7 @@ namespace Northwind
     public class ConsoleView
     {
         private Controller mainController;
+        private AdapterController adapterController = new AdapterController();
 
         public ConsoleView(Controller aController) {
             mainController = aController;
@@ -77,16 +78,16 @@ namespace Northwind
             switch (input)
             {
                 case "1":
-                    this.Print(mainController.GetCategories());
+                    this.Print(adapterController.GetCategories());
                     break;
                 case "2":
-                    this.Print(mainController.GetCustomers());
+                    this.Print(adapterController.GetCustomers());
                     break;
                 case "3":
-                    this.Print(mainController.GetEmployees());
+                    this.Print(adapterController.GetEmployees());
                     break;
                 case "4":
-                    this.Print(mainController.GetOrders());
+                    this.Print(adapterController.GetOrders());
                     break;
                 case "5":
                     Console.WriteLine("Enter 1 to search by Order, enter 2 to print all.");
@@ -94,7 +95,7 @@ namespace Northwind
                     if (detailKey == "1")
                     {
                         Console.WriteLine("Enter an Order ID: ");
-                        DataTable checkList = mainController.GetDetailsByOrder(Console.ReadLine());
+                        DataTable checkList = adapterController.GetDetailsByOrder(Console.ReadLine());
                         if (checkList.Rows.Count == 0)
                         {
                             Console.WriteLine("No details were found for that ID.");
@@ -106,7 +107,7 @@ namespace Northwind
                         }
                     }
                     else {
-                        this.Print(mainController.GetOrderDetails());
+                        this.Print(adapterController.GetOrderDetails());
                     }
                     break;
                 case "6":
@@ -116,29 +117,29 @@ namespace Northwind
                     switch (aKey) {
                         case "1":
                             Console.WriteLine("Enter a Product ID: ");
-                            this.Print(mainController.GetProductsByID(Console.ReadLine()));
+                            this.Print(adapterController.GetProductByID(Console.ReadLine()));
                             break;
                         case "2":
                             Console.WriteLine("Enter a Category ID: ");
-                            this.Print(mainController.GetProductsByCategory(Console.ReadLine()));
+                            this.Print(adapterController.GetProductsByCategory(Console.ReadLine()));
                             break;
                         case "3":
                             Console.WriteLine("Enter a minimum price.");
-                            double min = Double.Parse(Console.ReadLine());
+                            string min = Console.ReadLine();
                             Console.WriteLine("Enter a maximum price.");
-                            double max = Double.Parse(Console.ReadLine());
-                            this.Print(mainController.GetProductsByPrice(min, max));
+                            string max = Console.ReadLine();
+                            this.Print(adapterController.GetProductsByPrice(min, max));
                             break;
                         default:
-                            this.Print(mainController.GetProducts());
+                            this.Print(adapterController.GetProducts());
                             break;
                     }
                     break;
                 case "7":
-                    this.Print(mainController.GetShippers());
+                    this.Print(adapterController.GetShippers());
                     break;
                 case "8":
-                    this.Print(mainController.GetSuppliers());
+                    this.Print(adapterController.GetSuppliers());
                     break;
                 default: 
                     Console.WriteLine("Please enter a # 1-8");

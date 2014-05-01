@@ -87,6 +87,18 @@ namespace Northwind
             return aDataSet.Tables["MyOrderDetails"];
         }
 
+        public DataTable GetDetailsByOrder(string anID) {
+            string detailSQL = "SELECT OrderID, ProductID, UnitPrice, Quantity, Discount FROM [Order Details]";
+            aCommand.CommandText = detailSQL;
+            anAdapter.Fill(aDataSet, "MyOrderDetails");
+
+            var results = from aRow in aDataSet.Tables["MtOrderDetails"].AsEnumerable()
+                          where aRow.Field<int>("OrderID") == Int32.Parse(anID)
+                          select aRow;
+
+            return results.CopyToDataTable();
+        }
+
         public DataTable GetProducts()
         {
             string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
@@ -94,6 +106,48 @@ namespace Northwind
             anAdapter.Fill(aDataSet, "MyProducts");
 
             return aDataSet.Tables["MyProducts"];
+        }
+
+        public DataTable GetProductByID(string anID) {
+            string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
+            aCommand.CommandText = productSQL;
+            anAdapter.Fill(aDataSet, "MyProducts");
+
+            DataTable aTable = aDataSet.Tables["MyProducts"];
+
+            var results = from aRow in aTable.AsEnumerable()
+                          where aRow.Field<int>("ProductID") == Int32.Parse(anID)
+                          select aRow;
+
+            return results.CopyToDataTable();
+        }
+
+        public DataTable GetProductsByCategory(string anID) {
+            string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
+            aCommand.CommandText = productSQL;
+            anAdapter.Fill(aDataSet, "MyProducts");
+
+            DataTable aTable = aDataSet.Tables["MyProducts"];
+
+            var results = from aRow in aTable.AsEnumerable()
+                          where aRow.Field<int>("CategoryID") == Int32.Parse(anID)
+                          select aRow;
+
+            return results.CopyToDataTable();
+        }
+
+        public DataTable GetProductsByPrice(string min, string max) {
+            string productSQL = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products";
+            aCommand.CommandText = productSQL;
+            anAdapter.Fill(aDataSet, "MyProducts");
+
+            DataTable aTable = aDataSet.Tables["MyProducts"];
+
+            var results = from aRow in aTable.AsEnumerable()
+                          where aRow.Field<Decimal>("UnitPrice") >= Decimal.Parse(min) && aRow.Field<Decimal>("UnitPrice") <= Decimal.Parse(max)
+                          select aRow;
+
+            return results.CopyToDataTable();
         }
 
         public DataTable GetShippers()

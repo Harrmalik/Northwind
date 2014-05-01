@@ -17,44 +17,39 @@ namespace Northwind
         UtilityDBLoader aDBLoader = UtilityDBLoader.AnInstance;
         UtilityDBAdapter anAdapter = UtilityDBAdapter.AnInstance;
 
-        public DataTable GetCategories()
+        public List<IListable> GetCategories()
         {
-             return anAdapter.GetCategories();
+             return aDBLoader.GetCategories();
         }
 
-        public DataTable GetCustomers()
+        public List<IListable> GetCustomers()
         {
-            return anAdapter.GetCustomers();
+            return aDBLoader.GetCustomers();
         }
 
-        public DataTable GetEmployees()
+        public List<IListable> GetEmployees()
         {
-            return anAdapter.GetEmployees();
+            return aDBLoader.GetEmployees();
         }
 
-        public DataTable GetOrders()
+        public List<IListable> GetOrders()
         {
-            return anAdapter.GetOrders();
+            return aDBLoader.GetOrders();
         }
 
-        public DataTable GetOrderDetails()
+        public List<IListable> GetOrderDetails()
         {
-            return anAdapter.GetOrderDetails();
+            return aDBLoader.GetOrderDetails();
         }
 
-        public DataTable GetDetailsByOrder(string inputID)
+        public List<IListable> GetDetailsByOrder(string inputID)
         {
-            //return aDBLoader.GetDetailsByOrder(inputID);
-            var results = from aRow in anAdapter.GetOrderDetails().AsEnumerable()
-                          where aRow.Field<int>("OrderID") == Int32.Parse(inputID)
-                          select aRow;
-
-            return results.CopyToDataTable();
+            return aDBLoader.GetDetailsByOrder(inputID);
         }
 
-        public DataTable GetProducts()
+        public List<IListable> GetProducts()
         {
-            return anAdapter.GetProducts();
+            return aDBLoader.GetProducts();
         }
 
         public List<IListable> GetProductsByID(string anID)
