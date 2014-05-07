@@ -92,11 +92,20 @@ namespace Northwind
             aCommand.CommandText = detailSQL;
             anAdapter.Fill(aDataSet, "MyOrderDetails");
 
-            var results = from aRow in aDataSet.Tables["MtOrderDetails"].AsEnumerable()
-                          where aRow.Field<int>("OrderID") == Int32.Parse(anID)
-                          select aRow;
+            try
+            {
+                var results = from aRow in aDataSet.Tables["MyOrderDetails"].AsEnumerable()
+                              where aRow.Field<int>("OrderID") == Int32.Parse(anID)
+                              select aRow;
 
-            return results.CopyToDataTable();
+                return results.CopyToDataTable();
+            }
+            //If linq query throws an exception, return an empty DataTable.
+            catch {
+                var error = new DataTable();
+                return error;
+                
+            }
         }
 
         public DataTable GetProducts()
@@ -115,11 +124,19 @@ namespace Northwind
 
             DataTable aTable = aDataSet.Tables["MyProducts"];
 
-            var results = from aRow in aTable.AsEnumerable()
-                          where aRow.Field<int>("ProductID") == Int32.Parse(anID)
-                          select aRow;
+            try
+            {
+                var results = from aRow in aTable.AsEnumerable()
+                              where aRow.Field<int>("ProductID") == Int32.Parse(anID)
+                              select aRow;
 
-            return results.CopyToDataTable();
+                return results.CopyToDataTable();
+            }
+            //If linq query throws an exception, return an empty DataTable.
+            catch {
+                DataTable error = new DataTable();
+                return error;
+            }
         }
 
         public DataTable GetProductsByCategory(string anID) {
@@ -129,11 +146,19 @@ namespace Northwind
 
             DataTable aTable = aDataSet.Tables["MyProducts"];
 
-            var results = from aRow in aTable.AsEnumerable()
-                          where aRow.Field<int>("CategoryID") == Int32.Parse(anID)
-                          select aRow;
+            try
+            {
+                var results = from aRow in aTable.AsEnumerable()
+                              where aRow.Field<int>("CategoryID") == Int32.Parse(anID)
+                              select aRow;
 
-            return results.CopyToDataTable();
+                return results.CopyToDataTable();
+            }
+            //If linq query throws an exception, return an empty DataTable.
+            catch {
+                DataTable error = new DataTable();
+                return error;
+            }
         }
 
         public DataTable GetProductsByPrice(string min, string max) {
@@ -143,11 +168,20 @@ namespace Northwind
 
             DataTable aTable = aDataSet.Tables["MyProducts"];
 
-            var results = from aRow in aTable.AsEnumerable()
-                          where aRow.Field<Decimal>("UnitPrice") >= Decimal.Parse(min) && aRow.Field<Decimal>("UnitPrice") <= Decimal.Parse(max)
-                          select aRow;
+            try
+            {
+                var results = from aRow in aTable.AsEnumerable()
+                              where aRow.Field<Decimal>("UnitPrice") >= Decimal.Parse(min) && aRow.Field<Decimal>("UnitPrice") <= Decimal.Parse(max)
+                              select aRow;
 
-            return results.CopyToDataTable();
+                return results.CopyToDataTable();
+            }
+            //If linq query throws an exception, return an empty DataTable.
+            catch {
+                DataTable error = new DataTable();
+                return error;
+            }
+            
         }
 
         public DataTable GetShippers()

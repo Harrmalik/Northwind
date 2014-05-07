@@ -46,7 +46,7 @@ namespace Northwind
 
             Console.Write(output);
 
-            this.selectTable(Console.ReadLine());
+            this.SelectTable(Console.ReadLine());
         }
         
         public void Print(string aString) {
@@ -73,7 +73,7 @@ namespace Northwind
         }
 
         //Select records to putput based on input from Console
-        public void selectTable(string input)
+        public void SelectTable(string input)
         {
             switch (input)
             {
@@ -95,15 +95,17 @@ namespace Northwind
                     if (detailKey == "1")
                     {
                         Console.WriteLine("Enter an Order ID: ");
-                        DataTable checkList = adapterController.GetDetailsByOrder(Console.ReadLine());
-                        if (checkList.Rows.Count == 0)
+                        //store returned table for error checking
+                        DataTable checkTable = adapterController.GetDetailsByOrder(Console.ReadLine());
+                        //if table returned is empty, prompt for new input
+                        if (checkTable.Rows.Count == 0)
                         {
                             Console.WriteLine("No details were found for that ID.");
-                            this.selectTable("5");
+                            this.SelectTable("5");
                         }
                         else
                         {
-                            this.Print(checkList);
+                            this.Print(checkTable);
                         }
                     }
                     else {
@@ -117,18 +119,50 @@ namespace Northwind
                     switch (aKey) {
                         case "1":
                             Console.WriteLine("Enter a Product ID: ");
-                            this.Print(adapterController.GetProductByID(Console.ReadLine()));
+                            //store returned table for error checking
+                            DataTable checkTable = adapterController.GetProductByID(Console.ReadLine());
+                            //if table returned is empty, prompt for new input
+                            if (checkTable.Rows.Count == 0)
+                            {
+                                Console.WriteLine("No products were found for that ID.");
+                                this.SelectTable("6");
+                            }
+                            else
+                            {
+                                this.Print(checkTable);
+                            }
                             break;
                         case "2":
                             Console.WriteLine("Enter a Category ID: ");
-                            this.Print(adapterController.GetProductsByCategory(Console.ReadLine()));
+                            //store returned table for error checking
+                            DataTable categoryCheckTable = adapterController.GetProductsByCategory(Console.ReadLine());
+                            //if table returned is empty, prompt for new input
+                            if (categoryCheckTable.Rows.Count == 0)
+                            {
+                                Console.WriteLine("No products were found with that Category ID.");
+                                SelectTable("6");
+                            }
+                            else {
+                                this.Print(categoryCheckTable);
+                            }
                             break;
                         case "3":
                             Console.WriteLine("Enter a minimum price.");
                             string min = Console.ReadLine();
                             Console.WriteLine("Enter a maximum price.");
                             string max = Console.ReadLine();
-                            this.Print(adapterController.GetProductsByPrice(min, max));
+                            //store returned table for error checking
+                            DataTable priceCheckTable = adapterController.GetProductsByPrice(min, max);
+                            //if table returned is empty, prompt for new input
+                            if (priceCheckTable.Rows.Count == 0)
+                            {
+                                Console.WriteLine("No products were found for in that range.");
+                                this.SelectTable("6");
+                            }
+                            else
+                            {
+                                this.Print(priceCheckTable);
+                            }
                             break;
                         default:
                             this.Print(adapterController.GetProducts());
@@ -143,7 +177,7 @@ namespace Northwind
                     break;
                 default: 
                     Console.WriteLine("Please enter a # 1-8");
-                    this.selectTable(Console.ReadLine());
+                    this.SelectTable(Console.ReadLine());
                     break;
             }
             this.PrintTotals();
