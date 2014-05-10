@@ -24,12 +24,22 @@ The project includes:
 
 
 ## Views
-`LabView.cs` - Outputs to console.
+`ConsoleView.cs` - Simple Console Interface
+  + ConsoleView() - Constructor takes Controller instance as parameter
+  + PrintTotals() - Initial run to get # of records in each table, prints menu
+  + SelectTable() - Switch statement based on Console input offers user choice of which records to output
+  + Print() - 3 overloads
+    - String
+    - List<IListable> Used with `UtilityDBLoader`
+    - DataTable Used with `UtilityDBAdapter`
 
 ## Controllers
-`LabController` - Routes requests from the view to the appropriate Utility (XML or Database).
+`Controller` - Routes requests from the view to the UtilityDBLoader, returns Lists of Objects
+`AdapterController` - Routes requests from the view to the UtilityDBAdapter, returns DataTables
 
 ## Utility Classes
-`UtilityXMLFileLoader.cs` - Contains methods to load information from XML files and return lists.
+`UtilityXMLFileLoader.cs` - Loads information from XML files into objects using model classes and returns Lists.
 
-`UtilityDBLoader.cs` - Contains methods to load information from database and return lists.
+`UtilityDBLoader.cs` - Loads information from database into objects using model classes and returns Lists.
+
+`UtilityDBAdapter` - Loads information from database into a DataSet, returns DataTables.
