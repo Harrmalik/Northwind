@@ -23,7 +23,7 @@ The project includes:
 `Supplier.cs` - Stores ID, name &amp; contact information for supplier. 
 
 
-## Views
+## View
 `ConsoleView.cs` - Simple Console Interface
   + ConsoleView() - Constructor takes Controller instance as parameter
   + PrintTotals() - Initial run to get # of records in each table, prints menu
