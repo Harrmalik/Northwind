@@ -1,6 +1,6 @@
 //Written by Kyle Goetschius
 //Date: 1/29/2014
-//Controller class- 
+//Controller class- Used with UtilityDB Loader to pass object lists between model & view
 
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,8 @@ namespace Northwind
 {
     public class Controller
     {
-        UtilityXMLFileLoader aLoader = UtilityXMLFileLoader.AnInstance;
+        //UtilityXMLFileLoader aLoader = UtilityXMLFileLoader.AnInstance;
         UtilityDBLoader aDBLoader = UtilityDBLoader.AnInstance;
-        UtilityDBAdapter anAdapter = UtilityDBAdapter.AnInstance;
 
         public List<IListable> GetCategories()
         {
@@ -42,6 +41,7 @@ namespace Northwind
             return aDBLoader.GetOrderDetails();
         }
 
+        //accepts string as input to work easily with Console.ReadLine()
         public List<IListable> GetDetailsByOrder(string inputID)
         {
             return aDBLoader.GetDetailsByOrder(inputID);
@@ -52,29 +52,32 @@ namespace Northwind
             return aDBLoader.GetProducts();
         }
 
+        //accepts string as input to work easily with Console.ReadLine()
         public List<IListable> GetProductsByID(string anID)
         {
             return aDBLoader.GetProductByID(anID);
         }
 
+        //accepts string as input to work easily with Console.ReadLine()
         public List<IListable> GetProductsByCategory(string anID)
         {
             return aDBLoader.GetProductsByCategory(anID);
         }
 
+        //prices should be converted to Doubles before use
         public List<IListable> GetProductsByPrice(double min, double max)
         {
             return aDBLoader.GetProductsByPrice(min, max);
         }
 
-        public DataTable GetShippers()
+        public List<IListable> GetShippers()
         {
-            return anAdapter.GetShippers();
+            return aDBLoader.GetShippers();
         }
 
-        public DataTable GetSuppliers()
+        public List<IListable> GetSuppliers()
         {
-            return anAdapter.GetSuppliers();
+            return aDBLoader.GetSuppliers();
         } 
     }
 }

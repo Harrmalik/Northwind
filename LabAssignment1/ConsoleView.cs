@@ -1,6 +1,6 @@
 ﻿//Written by Kyle Goetschius
 //Date: 1/29/2014
-//View class- Print() method outputs to console.
+//View class- Switch statement allows end user to select which records they would like to see. Print() method outputs to console.
 
 using System;
 using System.Collections.Generic;
@@ -19,14 +19,16 @@ namespace Northwind
         public ConsoleView(Controller aController) {
             mainController = aController;
 
-            mainController.GetCategories();
+            //Uncomment block below to produce totals in menu on initial run
+
+            /*mainController.GetCategories();
             mainController.GetCustomers();
             mainController.GetEmployees();
             mainController.GetOrders();
             mainController.GetOrderDetails();
             mainController.GetProducts();
             mainController.GetShippers();
-            mainController.GetSuppliers();
+            mainController.GetSuppliers();*/
 
             this.PrintTotals();
         }
@@ -34,6 +36,7 @@ namespace Northwind
         //Retrieves & prints total stored as static var for each table
         public void PrintTotals(){
             string output = "";
+            //totalCount() Methods are used to produce selection menu
             output += Category.totalCount();
             output += Customer.totalCount();
             output += Employee.totalCount(); 
@@ -49,6 +52,7 @@ namespace Northwind
             this.SelectTable(Console.ReadLine());
         }
         
+        //Print() overloads. Writes output to Console.
         public void Print(string aString) {
             Console.WriteLine(aString);
             Console.ReadLine();

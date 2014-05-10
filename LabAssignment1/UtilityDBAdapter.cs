@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Written by Kyle Goetschius
+//Date: 5/14/2014
+//Utility class that loads DataTables into a DataSet via OleDB Connection. Methods to return DataTables to controller.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
