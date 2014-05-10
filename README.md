@@ -1,7 +1,7 @@
 Northwind
 =========
 
-A project that demonstrates loading data from Microsoft's Northwind database into objects. It uses a Model-View-Controller (MVC) architecture and loads information from either XML files or through a direct database connection.
+A project that demonstrates multiple ways of loading sample data from Microsoft’s Northwind database using a Model – View – Controller (MVC) architecture. Two object-oriented approaches are included, one using XML files and the other using a database connection. A second approach that forgoes the use of model classes is demonstrated, instead transferring information using DataTables.
 
 The project includes:
 
@@ -34,12 +34,12 @@ The project includes:
     - DataTable Used with `UtilityDBAdapter`
 
 ## Controllers
-`Controller` - Routes requests from the view to the UtilityDBLoader, returns Lists of Objects
-`AdapterController` - Routes requests from the view to the UtilityDBAdapter, returns DataTables
+`Controller.cs` - Routes requests from the view to the UtilityDBLoader, returns Lists of Objects
+`AdapterController.cs` - Routes requests from the view to the UtilityDBAdapter, returns DataTables
 
 ## Utility Classes
 `UtilityXMLFileLoader.cs` - Loads information from XML files into objects using model classes and returns Lists.
 
 `UtilityDBLoader.cs` - Loads information from database into objects using model classes and returns Lists.
 
-`UtilityDBAdapter` - Loads information from database into a DataSet, returns DataTables.
+`UtilityDBAdapter.cs` - Loads information from database into a DataSet, returns DataTables.
